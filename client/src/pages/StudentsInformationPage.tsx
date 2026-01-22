@@ -17,9 +17,6 @@ import {
 } from "react-icons/fi";
 import { FaBirthdayCake } from "react-icons/fa";
 import { type AttendanceType, type StudentsType } from "../types/index.types";
-import AttendanceHistory from "../components/AttendanceHistory";
-
-// --- Helpers ---
 function getInitials(name?: string): string {
   return name
     ? name
@@ -316,9 +313,7 @@ function StudentsInformationPage() {
           </div>
 
           {/* 3. Right Column: Timeline History */}
-          <div>
-            <AttendanceHistory />
-          </div>
+          <div></div>
         </div>
       </div>
     </div>
