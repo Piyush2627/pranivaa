@@ -1,7 +1,10 @@
 import HomePageImage1 from "../assets/images/homepageimage1.png";
 import Logo from "../assets/images/LogoWithoutText.png";
 //icons
-import { MdShoppingCartCheckout } from "react-icons/md";
+import { MdOutlineLight, MdShoppingCartCheckout } from "react-icons/md";
+import { MdSearch } from "react-icons/md";
+import { MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineShoppingBag } from "react-icons/md";
 
 const HomePage = () => {
   return (
@@ -11,7 +14,9 @@ const HomePage = () => {
           <div className="flex h-20 items-center justify-between">
             <div className="flex items-center md:hidden">
               <button className="hover: text-gray-600 dark:text-gray-300">
-                <span className="material-icons-outlined text-3xl">menu</span>
+                <span className="material-icons-outlined hidden text-3xl">
+                  menu
+                </span>
               </button>
             </div>
             <div className="flex flex-1 flex-shrink-0 items-center justify-center md:flex-none md:justify-start">
@@ -49,23 +54,25 @@ const HomePage = () => {
                 Recipes
               </a>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="hidden items-center space-x-4 md:flex">
               <button className="rounded-full p-2 transition-colors hover:bg-gray-200 dark:hover:bg-gray-800">
                 <span className="material-icons-outlined text-xl dark:hidden">
-                  dark_mode
+                  <MdOutlineDarkMode />
                 </span>
                 <span className="material-icons-outlined hidden text-xl dark:inline">
-                  light_mode
+                  <MdOutlineLight />
                 </span>
               </button>
               <a className="hover: p-2 transition-colors" href="#">
-                <span className="material-icons-outlined text-xl">search</span>
+                <span className="material-icons-outlined text-xl">
+                  <MdSearch />
+                </span>
               </a>
               <a className="hover: relative p-2 transition-colors" href="#">
                 <span className="material-icons-outlined text-xl">
-                  shopping_bag
+                  <MdOutlineShoppingBag />
                 </span>
-                <span className="bg-primary absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full text-[10px] text-white">
+                <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-lime-800 text-[10px] text-white">
                   2
                 </span>
               </a>
@@ -497,8 +504,10 @@ const HomePage = () => {
           <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
             <div>
               <a className="mb-6 flex items-center gap-2" href="#">
-                <div className="border-primary flex h-8 w-8 items-center justify-center rounded-full border">
-                  <span className="material-icons-outlined text-sm">spa</span>
+                <div className="flex items-center justify-center rounded-full">
+                  <span className="text-sm">
+                    <img src={Logo} className="" alt="" />
+                  </span>
                 </div>
                 <span className="font-display text-xl font-bold tracking-wide uppercase">
                   Pranivaa
