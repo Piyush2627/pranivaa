@@ -83,7 +83,7 @@ const AboutPage = () => {
             "Cold Wood Pressed",
             "Fair Trade Sourcing",
           ]}
-          velocity={30}
+          velocity={50}
           className="custom-scroll-text text-5xl"
         />
       </div>
