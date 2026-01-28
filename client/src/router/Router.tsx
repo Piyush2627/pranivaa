@@ -13,8 +13,6 @@ import AdminSignUpPage from "../pages/AdminSignUpPage";
 import StudentSignUpPage from "../pages/StudentSignUpPage";
 import WebLayout from "../layouts/WebLayout";
 import AboutPage from "../pages/AboutPage";
-import { title } from "process";
-
 export const router = createBrowserRouter([
   {
     path: "/",

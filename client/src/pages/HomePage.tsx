@@ -1,6 +1,4 @@
 import HomePageImage1 from "../assets/images/homepageimage1.png";
-import Logo from "../assets/images/LogoWithoutText.png";
-//icons
 import { MdShoppingCartCheckout } from "react-icons/md";
 
 const HomePage = () => {
