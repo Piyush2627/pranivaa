@@ -1,85 +1,11 @@
 import HomePageImage1 from "../assets/images/homepageimage1.png";
 import Logo from "../assets/images/LogoWithoutText.png";
 //icons
-import { MdOutlineLight, MdShoppingCartCheckout } from "react-icons/md";
-import { MdSearch } from "react-icons/md";
-import { MdOutlineDarkMode } from "react-icons/md";
-import { MdOutlineShoppingBag } from "react-icons/md";
+import { MdShoppingCartCheckout } from "react-icons/md";
 
 const HomePage = () => {
   return (
     <div>
-      <nav className="bg-background-light/90 dark:bg-background-dark/90 fixed z-50 w-full border-b border-gray-200 backdrop-blur-md transition-colors duration-300 dark:border-gray-800">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-20 items-center justify-between">
-            <div className="flex items-center md:hidden">
-              <button className="hover: text-gray-600 dark:text-gray-300">
-                <span className="material-icons-outlined hidden text-3xl">
-                  menu
-                </span>
-              </button>
-            </div>
-            <div className="flex flex-1 flex-shrink-0 items-center justify-center md:flex-none md:justify-start">
-              <a className="group flex items-center gap-2" href="#">
-                <img src={Logo} className="h-18 w-20" />
-
-                <span className="font-display text-2xl font-bold tracking-wide uppercase">
-                  Pranivaa
-                </span>
-              </a>
-            </div>
-            <div className="hidden space-x-8 md:flex">
-              <a
-                className="hover: text-sm font-medium transition-colors"
-                href="#"
-              >
-                Shop Oils
-              </a>
-              <a
-                className="hover: text-sm font-medium transition-colors"
-                href="#about"
-              >
-                Our Farmers
-              </a>
-              <a
-                className="hover: text-sm font-medium transition-colors"
-                href="#process"
-              >
-                Process
-              </a>
-              <a
-                className="hover: text-sm font-medium transition-colors"
-                href="#"
-              >
-                Recipes
-              </a>
-            </div>
-            <div className="hidden items-center space-x-4 md:flex">
-              <button className="rounded-full p-2 transition-colors hover:bg-gray-200 dark:hover:bg-gray-800">
-                <span className="material-icons-outlined text-xl dark:hidden">
-                  <MdOutlineDarkMode />
-                </span>
-                <span className="material-icons-outlined hidden text-xl dark:inline">
-                  <MdOutlineLight />
-                </span>
-              </button>
-              <a className="hover: p-2 transition-colors" href="#">
-                <span className="material-icons-outlined text-xl">
-                  <MdSearch />
-                </span>
-              </a>
-              <a className="hover: relative p-2 transition-colors" href="#">
-                <span className="material-icons-outlined text-xl">
-                  <MdOutlineShoppingBag />
-                </span>
-                <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-lime-800 text-[10px] text-white">
-                  2
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
       <header className="relative overflow-hidden pt-32 pb-16 md:pt-48 md:pb-32">
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
@@ -89,7 +15,7 @@ const HomePage = () => {
               </span>
               <h1 className="font-display text-5xl leading-tight font-bold text-gray-900 md:text-7xl dark:text-white">
                 Nature's Purest <br /> <span className="italic">Essence</span>
-              </h1>
+              </h1>{" "}
               <p className="mx-auto max-w-lg text-lg leading-relaxed text-gray-600 md:mx-0 dark:text-gray-300">
                 Ethically sourced directly from farmers, our wood-pressed oils
                 retain all the natural nutrients and flavors for a healthier
@@ -100,7 +26,7 @@ const HomePage = () => {
                   className="hover:bg-opacity-90 hover:shadow-primary/50 flex items-center justify-center gap-2 rounded-full bg-lime-800 px-8 py-4 font-medium text-white shadow-lg transition"
                   href="#bestsellers"
                 >
-                  Shop Now{" "}
+                  Shop Now
                   <span className="material-icons-outlined text-sm">
                     <MdShoppingCartCheckout className="size-5" />
                   </span>
@@ -499,130 +425,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <footer className="bg-surface-light dark:bg-surface-dark border-t border-gray-200 pt-16 pb-8 dark:border-gray-800">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <a className="mb-6 flex items-center gap-2" href="#">
-                <div className="flex items-center justify-center rounded-full">
-                  <span className="text-sm">
-                    <img src={Logo} className="" alt="" />
-                  </span>
-                </div>
-                <span className="font-display text-xl font-bold tracking-wide uppercase">
-                  Pranivaa
-                </span>
-              </a>
-              <p className="mb-6 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-                Bringing you the goodness of nature through traditional
-                wood-pressed oils. Pure, healthy, and full of love.
-              </p>
-              <div className="flex space-x-4">
-                <a className="hover: text-gray-400 transition" href="#">
-                  <i className="material-icons-outlined">facebook</i>
-                </a>
-                <a className="hover: text-gray-400 transition" href="#">
-                  <i className="material-icons-outlined">photo_camera</i>
-                </a>
-                <a className="hover: text-gray-400 transition" href="#">
-                  <i className="material-icons-outlined">alternate_email</i>
-                </a>
-              </div>
-            </div>
-            <div>
-              <h4 className="font-display mb-6 text-lg font-bold text-gray-900 dark:text-white">
-                Quick Links
-              </h4>
-              <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                <li>
-                  <a className="hover: transition" href="#">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a className="hover: transition" href="#">
-                    Shop Oils
-                  </a>
-                </li>
-                <li>
-                  <a className="hover: transition" href="#">
-                    Sustainability
-                  </a>
-                </li>
-                <li>
-                  <a className="hover: transition" href="#">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-display mb-6 text-lg font-bold text-gray-900 dark:text-white">
-                Customer Care
-              </h4>
-              <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                <li>
-                  <a className="hover: transition" href="#">
-                    Shipping Policy
-                  </a>
-                </li>
-                <li>
-                  <a className="hover: transition" href="#">
-                    Returns &amp; Refunds
-                  </a>
-                </li>
-                <li>
-                  <a className="hover: transition" href="#">
-                    Terms of Service
-                  </a>
-                </li>
-                <li>
-                  <a className="hover: transition" href="#">
-                    Privacy Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-display mb-6 text-lg font-bold text-gray-900 dark:text-white">
-                Stay Connected
-              </h4>
-              <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-                Subscribe to get special offers and healthy recipes.
-              </p>
-              <form className="space-y-2">
-                <input
-                  className="bg-background-light dark:bg-background-dark focus:ring-primary w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 transition outline-none focus:border-transparent focus:ring-2 dark:border-gray-600 dark:text-white"
-                  placeholder="Your email address"
-                  type="email"
-                />
-                <button
-                  className="bg-primary hover:bg-opacity-90 w-full rounded-lg px-4 py-3 font-medium text-white shadow-md transition"
-                  type="button"
-                >
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-8 md:flex-row dark:border-gray-700">
-            <p className="text-xs text-gray-500 dark:text-gray-500">
-              © 2023 Pranivaa Oils. All rights reserved.
-            </p>
-            <div className="flex space-x-2">
-              <span className="flex h-6 w-10 items-center justify-center rounded bg-gray-200 text-[10px] text-gray-500 dark:bg-gray-700">
-                VISA
-              </span>
-              <span className="flex h-6 w-10 items-center justify-center rounded bg-gray-200 text-[10px] text-gray-500 dark:bg-gray-700">
-                MC
-              </span>
-              <span className="flex h-6 w-10 items-center justify-center rounded bg-gray-200 text-[10px] text-gray-500 dark:bg-gray-700">
-                PAY
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

@@ -2,25 +2,24 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import StudentsDashboardPage from "../pages/StudentsDashboardPage";
-import AddStudentsPage from "../pages/AddStudentsPage";
 import UpdateImagePage from "../pages/UpdateImagePage";
 import LoginPage from "../pages/LoginPage";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import HomePage from "../pages/HomePage";
-import StudentsProfiles from "../pages/StudentsProfiles";
 import AdminLayout from "../layouts/AdminLayout";
 import StudentLayout from "../layouts/StudentLayout";
 import SettingsPage from "../pages/SettingsPage";
 import AdminSignUpPage from "../pages/AdminSignUpPage";
 import StudentSignUpPage from "../pages/StudentSignUpPage";
-import AttendanceDashboard from "../pages/AttendanceDashboard";
+import WebLayout from "../layouts/WebLayout";
+import AboutPage from "../pages/AboutPage";
+import { title } from "process";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      { path: "", element: <HomePage />, handle: { title: "home" } },
       { path: "login", element: <LoginPage />, handle: { title: "login" } },
       {
         path: "signup",
@@ -33,28 +32,28 @@ export const router = createBrowserRouter([
         handle: { title: "Admin signup" },
       },
       {
+        path: "",
+        element: <WebLayout />,
+        children: [
+          {
+            path: "",
+            element: <HomePage />,
+            handle: { title: "Home Page" },
+          },
+          {
+            path: "about",
+            element: <AboutPage />,
+            handle: { title: "About Page" },
+          },
+        ],
+      },
+      {
         element: <ProtectedRoute allowedRoles={["admin"]} />,
         children: [
           {
             path: "admin",
             element: <AdminLayout />,
             children: [
-              {
-                path: "dashboard",
-                element: <StudentsDashboardPage />,
-                handle: { title: " Dashboard" },
-              },
-              {
-                path: "add-students",
-                element: <AddStudentsPage />,
-                handle: { title: " Add Students" },
-              },
-              {
-                path: "attendanceDashboard",
-                element: <AttendanceDashboard />,
-                handle: { title: "Attendance" },
-              },
-
               {
                 path: "settings",
                 element: <SettingsPage />,
@@ -72,7 +71,6 @@ export const router = createBrowserRouter([
             element: <StudentLayout />,
             children: [
               { path: "dashboard", element: <StudentsDashboardPage /> },
-              { path: "profile", element: <StudentsProfiles /> },
               { path: "settings", element: <SettingsPage /> },
             ],
           },
