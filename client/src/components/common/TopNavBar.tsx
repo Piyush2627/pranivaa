@@ -64,7 +64,7 @@ const TopNavBar = () => {
               { label: "Home", to: "/" },
               { label: "About ", to: "/about" },
               { label: "Services", to: "/process" },
-              { label: "Contact", to: "/recipes" },
+              { label: "Contact ", to: "/recipes" },
             ].map((item) => (
               <Link
                 key={item.label}
