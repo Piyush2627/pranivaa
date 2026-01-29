@@ -6,80 +6,106 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
-const TopNavBar = () => {
-  //   const navigate = useNavigate();
-  //   const goBack = () => {
-  //     navigate(-1); // Navigate to previous page
-  //   };
+import StaggeredMenu from "../Cn/StaggeredMenu";
 
+const menuItems = [
+  { label: "Home", ariaLabel: "Go to home page", link: "/" },
+  { label: "About", ariaLabel: "Learn about us", link: "/about" },
+  { label: "Services", ariaLabel: "View our services", link: "/services" },
+  { label: "Contact", ariaLabel: "Get in touch", link: "/contact" },
+];
+
+const socialItems = [
+  { label: "Twitter", link: "https://twitter.com" },
+  { label: "GitHub", link: "https://github.com" },
+  { label: "LinkedIn", link: "https://linkedin.com" },
+];
+
+const TopNavBar = () => {
   return (
-    <nav className="bg-background-light/90 dark:bg-background-dark/90 fixed z-50 w-full border-b border-gray-200 backdrop-blur-md transition-colors duration-300 dark:border-gray-800">
+    <nav className="fixed top-0 z-50 w-full border-b border-black/5 bg-[#fdfbf7]/80 backdrop-blur-xl transition-colors dark:border-white/10 dark:bg-[#121212]/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
+          {/* ---------------- Mobile Menu ---------------- */}
           <div className="flex items-center md:hidden">
-            <button className="hover: text-gray-600 dark:text-gray-300">
-              <span className="material-icons-outlined hidden text-3xl">
-                menu
-              </span>
-            </button>
+            <StaggeredMenu
+              isFixed
+              position="left"
+              items={menuItems}
+              socialItems={socialItems}
+              displaySocials
+              displayItemNumbering
+              menuButtonColor="#2c3e2e"
+              openMenuButtonColor="#2c3e2e"
+              colors={["#B19EEF", "#5227FF"]}
+              accentColor="#5227FF"
+            />
           </div>
-          <div className="flex flex-1 flex-shrink-0 items-center justify-center md:flex-none md:justify-start">
-            <Link className="group flex items-center gap-2" to="/">
-              <img src={Logo} className="h-18 w-20" />
 
-              <span className="font-display text-2xl font-bold tracking-wide uppercase">
-                Pranivaa
-              </span>
-            </Link>
+          {/* ---------------- Logo ---------------- */}
+          <Link
+            to="/"
+            className="group flex items-center gap-3"
+            aria-label="Pranivaa Home"
+          >
+            <img
+              src={Logo}
+              alt="Pranivaa logo"
+              className="h-10 w-10 transition-transform duration-300 group-hover:scale-105"
+            />
+            <span className="font-display text-xl font-semibold tracking-[0.25em] text-[#2c3e2e] uppercase dark:text-white">
+              Pranivaa
+            </span>
+          </Link>
+
+          {/* ---------------- Desktop Nav ---------------- */}
+          <div className="hidden items-center gap-10 md:flex">
+            {[
+              { label: "Home", to: "/" },
+              { label: "About ", to: "/about" },
+              { label: "Services", to: "/process" },
+              { label: "Contact", to: "/recipes" },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className="group relative text-sm tracking-wide text-[#2c3e2e] dark:text-white/80"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-[#2c3e2e] transition-all duration-300 group-hover:w-full dark:bg-white" />
+              </Link>
+            ))}
           </div>
-          <div className="hidden space-x-8 md:flex">
-            <a
-              className="hover: text-sm font-medium transition-colors"
-              href="#"
+
+          {/* ---------------- Actions ---------------- */}
+          <div className="hidden items-center gap-3 md:flex">
+            {/* Theme Toggle */}
+            <button
+              aria-label="Toggle theme"
+              className="group rounded-full border border-black/10 bg-white/50 p-2 transition hover:bg-black hover:text-white dark:border-white/20 dark:bg-white/10 dark:hover:bg-white dark:hover:text-black"
             >
-              Shop Oils
-            </a>
-            <Link
-              className="hover: text-sm font-medium transition-colors"
-              to={"/about"}
-            >
-              Our Story
-            </Link>
-            <a
-              className="hover: text-sm font-medium transition-colors"
-              href="#process"
-            >
-              Process
-            </a>
-            <a
-              className="hover: text-sm font-medium transition-colors"
-              href="#"
-            >
-              Recipes
-            </a>
-          </div>
-          <div className="hidden items-center space-x-4 md:flex">
-            <button className="rounded-full p-2 transition-colors hover:bg-gray-200 dark:hover:bg-gray-800">
-              <span className="material-icons-outlined text-xl dark:hidden">
-                <MdOutlineDarkMode />
-              </span>
-              <span className="material-icons-outlined hidden text-xl dark:inline">
-                <MdOutlineLight />
-              </span>
+              <MdOutlineDarkMode className="text-xl dark:hidden" />
+              <MdOutlineLight className="hidden text-xl dark:block" />
             </button>
-            <a className="hover: p-2 transition-colors" href="#">
-              <span className="material-icons-outlined text-xl">
-                <MdSearch />
-              </span>
-            </a>
-            <a className="hover: relative p-2 transition-colors" href="#">
-              <span className="material-icons-outlined text-xl">
-                <MdOutlineShoppingBag />
-              </span>
-              <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-lime-800 text-[10px] text-white">
+
+            {/* Search */}
+            <button
+              aria-label="Search"
+              className="rounded-full p-2 transition hover:bg-black/5 dark:hover:bg-white/10"
+            >
+              <MdSearch className="text-xl text-[#2c3e2e] dark:text-white" />
+            </button>
+
+            {/* Cart */}
+            <button
+              aria-label="Shopping cart"
+              className="relative rounded-full p-2 transition hover:bg-black/5 dark:hover:bg-white/10"
+            >
+              <MdOutlineShoppingBag className="text-xl text-[#2c3e2e] dark:text-white" />
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-600 text-[10px] font-bold text-white">
                 2
               </span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
