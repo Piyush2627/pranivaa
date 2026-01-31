@@ -1,40 +1,57 @@
-import HomePageImage1 from "../assets/images/homepageimage1.png";
+import { Link } from "react-router-dom";
+import HomePageImage1 from "../assets/images/coconutBottleHome.png";
+import ourRootsImage from "../assets/images/OurRootsImage1.png";
+import ourRootsImage2 from "../assets/images/OurRootsImage2.png";
+import { FaSpa } from "react-icons/fa";
+
+import { MdClass, MdShield } from "react-icons/md";
+
 import { MdShoppingCartCheckout } from "react-icons/md";
 
 const HomePage = () => {
   return (
     <div>
-      <header className="relative overflow-hidden pt-32 pb-16 md:pt-48 md:pb-32">
+      <header className="font-poppins relative overflow-hidden pt-32 pb-16 md:pt-48 md:pb-32">
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="animate-fade-in-up space-y-6 text-center md:text-left">
-              <span className="mb-2 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-bold tracking-wider uppercase dark:bg-green-900/30">
-                100% Organic &amp; Wood Pressed
+            <div className="animate-fade-in-up text-center text-shadow-md md:text-left">
+              <span className="mb-2 inline-block rounded-full bg-lime-200 px-3 py-1 text-xs font-bold tracking-wider uppercase dark:bg-green-900/30">
+                Traditional oil pressing, restored for modern kitchens.
               </span>
-              <h1 className="font-display text-5xl leading-tight font-bold text-gray-900 md:text-7xl dark:text-white">
-                Nature's Purest <br /> <span className="italic">Essence</span>
+              <h1 className="text-5xl leading-tight font-bold text-gray-900 md:text-8xl">
+                PRANIVAA
+              </h1>
+              <h1 className="font-display text-2xl leading-tight font-bold text-gray-700 md:text-4xl dark:text-white">
+                <span className="text-lime-800">Not refined. </span>
+                Brings back oil as it was meant to be.
+                <br />
               </h1>{" "}
               <p className="mx-auto max-w-lg text-lg leading-relaxed text-gray-600 md:mx-0 dark:text-gray-300">
-                Ethically sourced directly from farmers, our wood-pressed oils
-                retain all the natural nutrients and flavors for a healthier
-                you.
+                Pressed slowly. Sourced transparently. Crafted in small batches
+                using traditional wood and cold-press methods, PRANIVAA oils
+                preserve natural flavour, aroma, and nutrition — without
+                unnecessary processing.{" "}
+              </p>
+              <p>
+                This is not oil made for speed or scale. This is oil defined by
+                nature
               </p>
               <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row md:justify-start">
                 <a
                   className="hover:bg-opacity-90 hover:shadow-primary/50 flex items-center justify-center gap-2 rounded-full bg-lime-800 px-8 py-4 font-medium text-white shadow-lg transition"
                   href="#bestsellers"
                 >
-                  Shop Now
+                  Explore Our Oils
                   <span className="material-icons-outlined text-sm">
                     <MdShoppingCartCheckout className="size-5" />
                   </span>
                 </a>
-                <a
+                <Link
                   className="flex items-center justify-center rounded-full border border-gray-300 px-8 py-4 font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
-                  href="#process"
+                  to="OurProcess"
                 >
-                  See Process
-                </a>
+                  Our Process
+                </Link>
               </div>
             </div>
             <div className="relative hidden h-[500px] w-full md:block">
@@ -46,28 +63,13 @@ const HomePage = () => {
                   className="shadow-soft h-full w-full transform rounded-3xl object-cover transition-transform duration-500 hover:scale-[1.02]"
                   src={HomePageImage1}
                 />
-                <div className="bg-surface-light dark:bg-surface-dark absolute bottom-8 left-[-20px] flex max-w-xs items-center gap-4 rounded-2xl border border-gray-100 p-4 shadow-xl dark:border-gray-700">
-                  <div className="rounded-full bg-green-100 p-3 dark:bg-green-900/50">
-                    <span className="material-icons-outlined">
-                      verified_user
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-gray-500 uppercase dark:text-gray-400">
-                      Certified
-                    </p>
-                    <p className="font-display font-bold text-gray-900 dark:text-white">
-                      100% Natural
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="relative mt-8 h-64 w-full overflow-hidden rounded-2xl shadow-lg md:hidden">
               <img
                 alt="Olive oil bottle"
                 className="h-full w-full object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTHBBSbggSsEztRAHat2FoKestcmhnr-yqNSyuTOhawJ3Mcp8TW3rN0oCHTiOPrxVSigPHnJ7VQFIUWPHFJwxF2_4-WKzfs9yRpK2gqYIv-mAyKOTI2EqhkJlJxDGjyGN4ajMXcrsKHBMZWqTs_Nq_75aBvqZk_OCscH0XRkEYhTt0UjJWdlzAgveoHWmkE-6UcBK-aMRmRhyCeQFkEbM2M_3bneGwSXsJt59a8PfwFOrxs3Yl47hftHdSnuOPLbFe4mIFnF1t2w"
+                src={ourRootsImage2}
               />
             </div>
           </div>
@@ -88,7 +90,7 @@ const HomePage = () => {
             <div className="group bg-background-light dark:bg-background-dark hover:border-primary/30 hover:shadow-soft rounded-2xl border border-transparent p-8 text-center transition-all duration-300">
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 transition-transform group-hover:scale-110 dark:bg-green-900/40">
                 <span className="material-icons-outlined text-3xl">
-                  favorite
+                  <MdClass />
                 </span>
               </div>
               <h3 className="font-display mb-3 text-xl font-bold dark:text-white">
@@ -101,7 +103,9 @@ const HomePage = () => {
             </div>
             <div className="group bg-background-light dark:bg-background-dark hover:border-primary/30 hover:shadow-soft rounded-2xl border border-transparent p-8 text-center transition-all duration-300">
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 transition-transform group-hover:scale-110 dark:bg-green-900/40">
-                <span className="material-icons-outlined text-3xl">shield</span>
+                <span className="material-icons-outlined text-3xl">
+                  <MdShield />
+                </span>
               </div>
               <h3 className="font-display mb-3 text-xl font-bold dark:text-white">
                 Boosts Immunity
@@ -113,7 +117,9 @@ const HomePage = () => {
             </div>
             <div className="group bg-background-light dark:bg-background-dark hover:border-primary/30 hover:shadow-soft rounded-2xl border border-transparent p-8 text-center transition-all duration-300">
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 transition-transform group-hover:scale-110 dark:bg-green-900/40">
-                <span className="material-icons-outlined text-3xl">spa</span>
+                <span className="material-icons-outlined text-3xl">
+                  <FaSpa />
+                </span>
               </div>
               <h3 className="font-display mb-3 text-xl font-bold dark:text-white">
                 Skin &amp; Hair
@@ -137,12 +143,12 @@ const HomePage = () => {
                 <img
                   alt="Farmer holding harvest"
                   className="h-64 w-full translate-y-8 transform rounded-2xl object-cover shadow-lg"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYuHEbWYc-Clll9_3KWWKobKC643uCRxL4ECrG-pZ87uwwxxi_55KRvDbm11sLekvyPwdpwePQsGT1XQzlpMwDDRBEvf2ogMzFUlZMTRcjtfRzHkBJvFAdXuK1yEtNChBeedvTTl0ofDQ2dhY0n3AJFhSjEpXSqeZtnozCBf2Nd2QxC68QkYHgiGjax2ybJ73XWZttWXSxl4YIdPOzgq3TN8SiwOcZhW1wf0s6IpW5OabvD7V280q_g0zNEOANPCZAdqgHgpB-Gg"
+                  src={ourRootsImage2}
                 />
                 <img
                   alt="Organic farming field"
                   className="h-64 w-full rounded-2xl object-cover shadow-lg"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwfY6WPht3QuZD1WmPvvkYXudnMnRo4OXSVu47S7ZrPei5Vc3FpJhxfGmKK_im_TOsL1kxQ0neyY5Yrf6-rhDVWF63N5reaXWYv8WyLUamepoPwhgi0CQ4up6T8OXeXa3YPUscExBDsIkUAvmEuEe5oo3rKZ0mrcjvCHz5RIvuSE-xE4f5OBia8drSUAX2xE11AsLyXAVmge4Jve2ZuUBTAEnNjfPrDweQWNBPnVGfFyxiBKudjbvcJ9xmzoqOhWyLgBytJqDyYw"
+                  src={ourRootsImage}
                 />
               </div>
               <div className="bg-secondary/10 absolute top-1/2 left-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 transform rounded-full blur-3xl"></div>

@@ -13,6 +13,7 @@ import AdminSignUpPage from "../pages/AdminSignUpPage";
 import StudentSignUpPage from "../pages/StudentSignUpPage";
 import WebLayout from "../layouts/WebLayout";
 import AboutPage from "../pages/AboutPage";
+import OurProcessPage from "../pages/OurProcessPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -42,6 +43,11 @@ export const router = createBrowserRouter([
             path: "about",
             element: <AboutPage />,
             handle: { title: "About Page" },
+          },
+          {
+            path: "OurProcess",
+            element: <OurProcessPage />,
+            handle: { title: "Our Process" },
           },
         ],
       },
