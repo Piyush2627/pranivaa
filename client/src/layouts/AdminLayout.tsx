@@ -23,8 +23,8 @@ function AdminLayout() {
 
           <SidebarItem
             icon={<MdPersonAddAlt1 />}
-            text="Add Student"
-            link="/admin/add-Students"
+            text="Add User"
+            link="/admin/add-Users"
           />
           <SidebarItem
             icon={<FaAddressCard />}
@@ -44,8 +44,8 @@ function AdminLayout() {
           />
           <SidebarItem
             icon={<FaAddressCard />}
-            text="Student Profiles"
-            link="/admin/studentsProfiles"
+            text="User Profiles"
+            link="/admin/usersProfiles"
           />
           <SidebarItem
             icon={<BsCardChecklist />}

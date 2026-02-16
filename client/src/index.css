@@ -1,8 +1,4 @@
 @font-face {
-  font-family: Shockwave;
-  src: url("../src/assets/fonts/Shockwave.otf");
-}
-@font-face {
   font-family: DreamyChocolate;
   src: url("../src/assets/fonts/Dreamy\ Chocolate.otf");
 }
@@ -18,6 +14,10 @@
   font-family: poppins-medium;
   src: url("../src/assets/fonts/Poppins-Medium.ttf");
 }
+@font-face {
+  font-family: source-serif;
+  src: url("../src/assets/fonts/SourceSerif/SourceSerif4-VariableFont_opsz\,wght.ttf");
+}
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
@@ -25,7 +25,44 @@
 @theme {
   --font-poppins-medium: "poppins-medium";
   --font-poppins: "poppins";
-  --font-shockwave: "Shockwave";
   --font-dreamyChocolate: "DreamyChocolate";
   --font-alexana: "Alexana";
+  --font-source-serif: "source-serif";
+
+  /* colors */
+  --color-loafer-50: #f5fbe6;
+  --color-loafer-100: #ebf7d0;
+  --color-loafer-200: #d7efa7;
+  --color-loafer-300: #bce373;
+  --color-loafer-400: #a1d348;
+  --color-loafer-500: #83b929;
+  --color-loafer-600: #64931d;
+  --color-loafer-700: #4d701b;
+  --color-loafer-800: #3f591b;
+  --color-loafer-900: #364c1b;
+  --color-loafer-950: #1b2a09;
+
+  --color-dallas-50: #f8f6ee;
+  --color-dallas-100: #efe9d2;
+  --color-dallas-200: #e0d3a8;
+  --color-dallas-300: #ceb776;
+  --color-dallas-400: #bf9d50;
+  --color-dallas-500: #b08a42;
+  --color-dallas-600: #976e37;
+  --color-dallas-700: #7b542f;
+  --color-dallas-800: #67452c;
+  --color-dallas-900: #593b2a;
+  --color-dallas-950: #331f15;
+
+  --color-mandalay-50: #fbf9eb;
+  --color-mandalay-100: #f7efca;
+  --color-mandalay-200: #f0dd98;
+  --color-mandalay-300: #e7c55d;
+  --color-mandalay-400: #deac31;
+  --color-mandalay-500: #ce9624;
+  --color-mandalay-600: #b6771d;
+  --color-mandalay-700: #8e551a;
+  --color-mandalay-800: #76441d;
+  --color-mandalay-900: #653a1e;
+  --color-mandalay-950: #3b1d0d;
 }

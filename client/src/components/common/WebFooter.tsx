@@ -1,10 +1,17 @@
 import Logo from "../../assets/images/LogoWithoutText.png";
+import { motion } from "framer-motion";
 
 const WebFooter = () => {
   return (
     <div>
       {" "}
-      <footer className="bg-surface-light dark:bg-surface-dark border-t border-gray-200 pt-16 pb-8 dark:border-gray-800">
+      <motion.footer 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="border-t border-gray-200 bg-[#F5FBE6] pt-16 pb-8 dark:border-gray-800"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
             <div>
@@ -102,7 +109,7 @@ const WebFooter = () => {
                   type="email"
                 />
                 <button
-                  className="bg-primary hover:bg-opacity-90 w-full rounded-lg px-4 py-3 font-medium text-white shadow-md transition"
+                  className="hover:bg-opacity-90 w-full rounded-lg bg-[#7B542F] px-4 py-3 font-medium text-white shadow-md transition"
                   type="button"
                 >
                   Subscribe
@@ -127,7 +134,7 @@ const WebFooter = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 };

@@ -1,18 +1,19 @@
 import Logo from "../../assets/images/LogoWithoutText.png";
-import {
-  MdOutlineDarkMode,
-  MdOutlineLight,
-  MdOutlineShoppingBag,
-  MdSearch,
-} from "react-icons/md";
+import { MdOutlineShoppingBag, MdSearch } from "react-icons/md";
 import { Link } from "react-router-dom";
 import StaggeredMenu from "../Cn/StaggeredMenu";
+import ThemeToggleButton from "./ThemeToggleButton";
+import { useCart } from "../../context/CartContext";
+import { motion, useScroll } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const menuItems = [
   { label: "Home", ariaLabel: "Go to home page", link: "/" },
   { label: "About", ariaLabel: "Learn about us", link: "/about" },
   { label: "Services", ariaLabel: "View our services", link: "/services" },
   { label: "Contact", ariaLabel: "Get in touch", link: "/contact" },
+  { label: "Products", ariaLabel: "Shop for Product", link: "/productsPage" },
+  { label: "Why Cold Press", ariaLabel: "Go to why cold press page", link: "/why-cold-pressed" },
 ];
 
 const socialItems = [
@@ -22,11 +23,29 @@ const socialItems = [
 ];
 
 const TopNavBar = () => {
+  const { totalItems, setIsCartOpen } = useCart();
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      setIsScrolled(latest > 50);
+    });
+  }, [scrollY]);
+
   return (
-    <nav className="fixed top-0 z-50 w-full border-b border-black/5 bg-[#fdfbf7]/80 backdrop-blur-xl transition-colors dark:border-white/10 dark:bg-[#121212]/80">
+    <motion.nav
+      initial={{ backgroundColor: "rgba(255, 255, 255, 0)", backdropFilter: "blur(0px)" }}
+      animate={{
+        backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0)",
+        backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)",
+        borderBottom: isScrolled ? "1px solid rgba(0,0,0,0.05)" : "1px solid rgba(0,0,0,0)"
+      }}
+      transition={{ duration: 0.3 }}
+      className="font-source-serif fixed top-0 z-50 w-full transition-colors dark:border-white/10 dark:bg-[#121212]/80"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
-          {/* ---------------- Mobile Menu ---------------- */}
           <div className="flex items-center md:hidden">
             <StaggeredMenu
               isFixed
@@ -42,7 +61,6 @@ const TopNavBar = () => {
             />
           </div>
 
-          {/* ---------------- Logo ---------------- */}
           <Link
             to="/"
             className="group flex items-center gap-3"
@@ -53,18 +71,20 @@ const TopNavBar = () => {
               alt="Pranivaa logo"
               className="h-10 w-10 transition-transform duration-300 group-hover:scale-105"
             />
-            <span className="font-display text-xl font-semibold tracking-[0.25em] text-[#2c3e2e] uppercase dark:text-white">
+            <span className="font-display text-xl font-semibold tracking-[0.1em] text-lime-800 uppercase dark:text-white">
               Pranivaa
             </span>
           </Link>
 
-          {/* ---------------- Desktop Nav ---------------- */}
           <div className="hidden items-center gap-10 md:flex">
             {[
-              { label: "Home", to: "/" },
-              { label: "About ", to: "/about" },
-              { label: "Services", to: "/process" },
-              { label: "Contact ", to: "/recipes" },
+              {
+                label: "Products",
+                to: "/productsPage",
+              },
+              { label: "Why Cold Press ", to: "/why-cold-pressed" },
+              { label: "Knowledge Hub", to: "/process" },
+              { label: "Contact", to: "/contact" },
             ].map((item) => (
               <Link
                 key={item.label}
@@ -72,45 +92,64 @@ const TopNavBar = () => {
                 className="group relative text-sm tracking-wide text-[#2c3e2e] dark:text-white/80"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-[#2c3e2e] transition-all duration-300 group-hover:w-full dark:bg-white" />
+                <motion.span 
+                  className="absolute -bottom-1 left-0 h-[1px] w-0 bg-[#2c3e2e] dark:bg-white" 
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
               </Link>
             ))}
           </div>
 
           {/* ---------------- Actions ---------------- */}
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="items-center gap-3 md:flex">
+            <div className="hidden items-center md:flex">
+              <ThemeToggleButton />
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Search"
+                className="rounded-full p-2 transition hover:bg-black/5 dark:hover:bg-white/10"
+              >
+                <MdSearch className="text-xl text-[#2c3e2e] dark:text-white" />
+              </motion.button>
+
+              {/* Cart */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsCartOpen(true)}
+                aria-label="Shopping cart"
+                className="relative rounded-full p-2 transition hover:bg-black/5 dark:hover:bg-white/10"
+              >
+                <MdOutlineShoppingBag className="text-xl text-[#2c3e2e] dark:text-white" />
+                {totalItems > 0 && (
+                  <motion.span 
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime-800 text-[10px] font-bold text-white"
+                  >
+                    {totalItems}
+                  </motion.span>
+                )}
+              </motion.button>
+            </div>
             {/* Theme Toggle */}
-            <button
-              aria-label="Toggle theme"
-              className="group rounded-full border border-black/10 bg-white/50 p-2 transition hover:bg-black hover:text-white dark:border-white/20 dark:bg-white/10 dark:hover:bg-white dark:hover:text-black"
-            >
-              <MdOutlineDarkMode className="text-xl dark:hidden" />
-              <MdOutlineLight className="hidden text-xl dark:block" />
-            </button>
 
             {/* Search */}
-            <button
-              aria-label="Search"
-              className="rounded-full p-2 transition hover:bg-black/5 dark:hover:bg-white/10"
-            >
-              <MdSearch className="text-xl text-[#2c3e2e] dark:text-white" />
-            </button>
-
-            {/* Cart */}
-            <button
-              aria-label="Shopping cart"
-              className="relative rounded-full p-2 transition hover:bg-black/5 dark:hover:bg-white/10"
-            >
-              <MdOutlineShoppingBag className="text-xl text-[#2c3e2e] dark:text-white" />
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-600 text-[10px] font-bold text-white">
-                2
-              </span>
-            </button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link to="/login" className="rounded-full bg-[#7B542F] px-5 py-2 text-white" aria-label="Login button">
+                Login
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
 export default TopNavBar;
+
+

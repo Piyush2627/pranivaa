@@ -24,7 +24,7 @@ export default function useAuth() {
           name: decoded.name || storageUser?.name || storageUser?.userName,
           email: decoded.email || storageUser?.email,
           role: decoded.role || storageUser?.role,
-          studentId: decoded.studentId || storageUser?.studentId,
+          userId: decoded.userId || storageUser?.userId,
         };
       } catch (error) {
         console.error("Error decoding token:", error);

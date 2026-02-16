@@ -22,7 +22,7 @@ const IMAGES = {
 
 const AboutPage = () => {
   return (
-    <div className="font-poppins bg-[#fdfbf7] text-white selection:bg-orange-100">
+    <div className="font-poppins text-white dark:bg-black">
       {/* --- HERO SECTION --- */}
       <section className="relative h-screen w-full overflow-hidden">
         {/* Parallax Background */}
@@ -43,7 +43,7 @@ const AboutPage = () => {
               <h1>Your Content Here</h1>
             </div>
           </div>
-          <div className="absolute inset-0 bg-black/30 bg-gradient-to-b from-white/60 via-transparent to-black/60" />
+          <div className="absolute inset-0 bg-black/30 bg-gradient-to-b from-white/60 via-transparent to-black/60 dark:from-black/60" />
         </div>
 
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
@@ -91,13 +91,15 @@ const AboutPage = () => {
       {/* --- STORY SECTION --- */}
       <section className="px-6 py-24 md:py-32">
         <div className="mx-auto grid max-w-[1200px] items-center gap-16 md:grid-cols-2">
-          <div className="order-2 space-y-8 md:order-1">
-            <h2 className="text-4xl leading-tight text-[#2c3e2e] md:text-6xl">
-              Purity over <br />
-              <span className="text-orange-600 italic">Productivity.</span>
+          <div className="order-2 space-y-8 text-black md:order-1 dark:text-white">
+            <h2 className="text-4xl leading-tight md:text-6xl">
+              <span className="font-bold text-gray-900 text-shadow-md dark:text-white">
+                Purity over <br />
+              </span>
+              <p className="font-thin text-gray-500">Productivity.</p>
             </h2>
 
-            <div className="space-y-6 text-lg leading-relaxed font-light text-slate-600">
+            <div className="space-y-6 text-lg leading-relaxed font-light text-slate-600 dark:text-white">
               <p>
                 In a world obsessed with speed, we chose to slow down. Our
                 wood-pressing process (known as <em>Ghani</em>) is deliberate,
@@ -129,7 +131,6 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* --- WHY WOOD? (Value Props) --- */}
       <section className="relative overflow-hidden bg-[#2c3e2e] px-6 py-24 text-[#fdfbf7]">
         {/* Background Pattern */}
         <div className="absolute top-0 right-0 -mt-32 -mr-32 h-64 w-64 rounded-full bg-orange-500/10 blur-3xl"></div>
@@ -150,7 +151,6 @@ const AboutPage = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {/* Feature 1 */}
             <div className="group rounded-2xl border border-white/5 bg-white/5 p-8 transition-all duration-300 hover:bg-white/10">
               <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/20 text-2xl text-orange-400">
                 <FaSun />
@@ -192,11 +192,10 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* --- HUMAN CONNECTION (Sourcing) --- */}
-      <section className="bg-orange-50/50 px-6 py-24">
+      <section className="px-6 py-24">
         <div className="mx-auto max-w-[1200px]">
           <div className="mb-12 text-center">
-            <h2 className="mb-4 text-4xl text-[#2c3e2e] md:text-5xl">
+            <h2 className="mb-4 text-4xl font-bold text-black md:text-5xl dark:text-white">
               From Their Hands to Yours
             </h2>
             <p className="mx-auto max-w-2xl text-slate-600">
@@ -241,7 +240,6 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* --- CTA SECTION (Shop Hook) --- */}
       <section className="relative overflow-hidden px-6 py-24">
         <div className="absolute inset-0 bg-[#2c3e2e]"></div>
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
@@ -249,7 +247,7 @@ const AboutPage = () => {
         <div className="relative z-10 mx-auto max-w-4xl text-center text-white">
           <h2 className="mb-8 text-5xl leading-tight md:text-7xl">
             Taste the <br />{" "}
-            <span className="text-orange-300 italic">Difference.</span>
+            <span className="text-orange-300">Difference.</span>
           </h2>
           <p className="mx-auto mb-10 max-w-lg text-xl text-white/80">
             Ready to swap your refined oils for something real? Your kitchen

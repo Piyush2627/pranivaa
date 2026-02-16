@@ -30,8 +30,8 @@ function MainLayout() {
         if (publicRoutes.includes(location.pathname)) {
           if (decodedToken.role === "admin") {
             navigate("/admin/dashboard", { replace: true });
-          } else if (decodedToken.role === "student") {
-            navigate("/student/dashboard", { replace: true });
+          } else if (decodedToken.role === "user") {
+            navigate("/user/dashboard", { replace: true });
           }
           return;
         }

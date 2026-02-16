@@ -4,7 +4,7 @@ export type UserType = {
   email: string;
   password: string;
   role: string;
-  StudentsId?: StudentsType;
+  UserId?: UserDataType;
 };
 
 export type EnquiryRemarkType = {
@@ -15,7 +15,7 @@ export type EnquiryRemarkType = {
 
 export type EnquiryType = {
   _id: string;
-  studentName: string;
+  name: string;
   email: string;
   phone: string;
   instrument: string;
@@ -26,29 +26,29 @@ export type EnquiryType = {
   followUp: string;
 };
 
-export type StudentsType = {
-  StudentsStatus: string;
+export type UserDataType = {
+  userStatus: string;
   target: any;
   _id: string;
-  studentName: string;
-  studentsEmail: string;
-  studentsMobileNumber: number;
-  studentsInstruments: string[];
-  studentsJoiningDate?: Date;
-  studentsBranch: string;
-  studentsAge: number;
-  studentsProfile: string;
-  studentsAddress: {
+  name: string;
+  email: string;
+  mobileNumber: number;
+  instruments: string[];
+  joiningDate?: Date;
+  branch: string;
+  age: number;
+  profile: string;
+  address: {
     country?: string;
     city?: string;
     address?: string;
   };
 };
 
-export type AttendanceStudentType = {
-  attendanceStudentsId: {
+export type AttendanceUserType = {
+  attendanceUserId: {
     _id: string;
-    studentName: string;
+    name: string;
   };
   attendanceStatus: "Present" | "Absent" | "Late";
 };
@@ -58,7 +58,7 @@ export type AttendanceType = {
   attendanceDate: Date;
   attendanceRemark?: string;
   attendanceOfClass: string;
-  attendanceRecord: AttendanceStudentType[];
+  attendanceRecord: AttendanceUserType[];
 };
 
 export type ClassBatchType = {
@@ -67,7 +67,7 @@ export type ClassBatchType = {
   batchInstructor: InstructorType;
   batchInstrument?: string;
   batchTiming: string;
-  batchStudents: StudentsType[];
+  batchUsers: UserDataType[];
   batchStartDate?: string;
   batchBranch?: string;
   createdAt?: string;

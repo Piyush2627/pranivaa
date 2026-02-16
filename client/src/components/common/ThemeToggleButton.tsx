@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MdOutlineDarkMode, MdOutlineLight } from "react-icons/md";
 
 function ThemeToggleButton() {
   const [darkMode, setDarkMode] = useState(false);
@@ -9,21 +10,24 @@ function ThemeToggleButton() {
   }, []);
 
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    document.documentElement.classList.toggle("dark", darkMode);
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
   return (
-    <button
+    <div
       onClick={() => setDarkMode((prev) => !prev)}
-      className="rounded bg-gray-200 px-4 py-2 dark:bg-gray-700"
+      className="cursor-pointer text-gray-800 dark:text-white"
+      aria-label="Toggle theme"
+      role="button"
     >
-      Toggle {darkMode ? "Light" : "Dark"} Mode
-    </button>
+      {darkMode ? (
+        <MdOutlineLight size={20} />
+      ) : (
+        <MdOutlineDarkMode size={20} />
+      )}
+    </div>
   );
 }
+
 export default ThemeToggleButton;

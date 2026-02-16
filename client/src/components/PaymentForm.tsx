@@ -2,14 +2,14 @@ import React, { useState, useEffect, type FormEvent } from "react";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-interface Student {
+interface User {
   _id: string;
-  studentName: string;
+  name: string;
 }
 
 interface Payment {
   _id?: string;
-  student: string;
+  user: string;
   amount: number;
   classesAttended?: number;
   status?: "paid" | "unpaid";
@@ -18,32 +18,32 @@ interface Payment {
 
 const PaymentForm: React.FC = () => {
   const queryClient = useQueryClient();
-  const [studentSearch, setStudentSearch] = useState("");
-  const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [userSearch, setUserSearch] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [classesAttended, setClassesAttended] = useState("8"); // default value from schema
   const [status, setStatus] = useState<"paid" | "unpaid">("unpaid");
 
-  // Fetch students list
-  const { data: students = [] } = useQuery<Student[]>({
-    queryKey: ["students"],
+  // Fetch users list
+  const { data: users = [] } = useQuery<User[]>({
+    queryKey: ["users"],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
+        `${import.meta.env.VITE_API_BASE_URL}/getAllUser`,
       );
       return res.data.data;
     },
   });
 
-  // Filter students
+  // Filter users
   useEffect(() => {
-    const filtered = students.filter((student) =>
-      student.studentName.toLowerCase().includes(studentSearch.toLowerCase()),
+    const filtered = users.filter((user) =>
+      user.name.toLowerCase().includes(userSearch.toLowerCase()),
     );
-    setFilteredStudents(filtered);
-  }, [studentSearch, students]);
+    setFilteredUsers(filtered);
+  }, [userSearch, users]);
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (payment: Payment) => {
@@ -56,8 +56,8 @@ const PaymentForm: React.FC = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["payments"] });
       // Reset form
-      setSelectedStudent(null);
-      setStudentSearch("");
+      setSelectedUser(null);
+      setUserSearch("");
       setAmount("");
       setDate("");
       setClassesAttended("8");
@@ -67,10 +67,10 @@ const PaymentForm: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!selectedStudent || !amount) return;
+    if (!selectedUser || !amount) return;
 
     mutate({
-      student: selectedStudent._id,
+      user: selectedUser._id,
       amount: parseFloat(amount),
       classesAttended: parseInt(classesAttended),
       status,
@@ -85,31 +85,31 @@ const PaymentForm: React.FC = () => {
     >
       <h2 className="text-xl font-semibold">Add Payment</h2>
 
-      {/* Student Search Input */}
+      {/* User Search Input */}
       <input
         type="text"
-        placeholder="Search student by name"
-        value={selectedStudent?.studentName || studentSearch}
+        placeholder="Search user by name"
+        value={selectedUser?.name || userSearch}
         onChange={(e) => {
-          setStudentSearch(e.target.value);
-          setSelectedStudent(null);
+          setUserSearch(e.target.value);
+          setSelectedUser(null);
         }}
         className="w-full rounded border px-4 py-2"
       />
 
-      {/* Student Dropdown */}
-      {studentSearch && !selectedStudent && (
+      {/* User Dropdown */}
+      {userSearch && !selectedUser && (
         <ul className="max-h-40 overflow-y-auto rounded border bg-white shadow">
-          {filteredStudents.map((student) => (
+          {filteredUsers.map((user) => (
             <li
-              key={student._id}
+              key={user._id}
               onClick={() => {
-                setSelectedStudent(student);
-                setStudentSearch("");
+                setSelectedUser(user);
+                setUserSearch("");
               }}
               className="cursor-pointer px-4 py-2 hover:bg-gray-100"
             >
-              {student.studentName}
+              {user.name}
             </li>
           ))}
         </ul>
@@ -154,7 +154,7 @@ const PaymentForm: React.FC = () => {
       {/* Submit Button */}
       <button
         type="submit"
-        disabled={!selectedStudent || isPending}
+        disabled={!selectedUser || isPending}
         className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
       >
         {isPending ? "Submitting..." : "Submit Payment"}

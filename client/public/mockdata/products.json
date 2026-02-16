@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "productName": "Wood Pressed Groundnut Oil",
+    "description": "Our Groundnut Oil is wood-pressed (Kolhu/Ghani) at low temperatures to retain its natural aroma, flavor, and nutrients. It's rich in antioxidants and heart-healthy monounsaturated fats.",
+    "category": "Edible Oils",
+    "quantity": "1 Litre",
+    "price": 450,
+    "currency": "₹",
+    "origin": "Rajasthan",
+    "organic": true,
+    "imageUrl": "https://images.unsplash.com/photo-1474979266404-7cadd259d366?auto=format&fit=crop&q=80&w=1000",
+    "tag": "Bestseller",
+    "benefits": ["Heart Healthy", "Rich in Vitamin E", "High Smoke Point"]
+  },
+  {
+    "id": 2,
+    "productName": "Virgin Coconut Oil",
+    "description": "Cold-pressed from fresh coconut milk, our Virgin Coconut Oil is 100% natural and unrefined. Perfect for cooking, skin care, and hair care.",
+    "category": "Edible Oils",
+    "quantity": "500 ml",
+    "price": 399,
+    "currency": "₹",
+    "origin": "Kerala",
+    "organic": true,
+    "imageUrl": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1000",
+    "tag": "Purely Natural",
+    "benefits": ["Antimicrobial", "Boosts Metabolism", "Excellent for Skin"]
+  },
+  {
+    "id": 3,
+    "productName": "Black Sesame Oil",
+    "description": "Traditional Wood Pressed Black Sesame Oil, known for its deep nutty flavor and numerous health benefits. Extracted from premium black sesame seeds.",
+    "category": "Edible Oils",
+    "quantity": "1 Litre",
+    "price": 550,
+    "currency": "₹",
+    "origin": "Tamil Nadu",
+    "organic": true,
+    "imageUrl": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&q=80&w=1000",
+    "tag": "Traditional",
+    "benefits": ["Bone Health", "Stress Relief", "Rich in Calcium"]
+  },
+  {
+    "id": 4,
+    "productName": "Kachi Ghani Mustard Oil",
+    "description": "Cold-pressed from hand-picked mustard seeds, our Kachi Ghani Mustard Oil has a strong aroma and pungent flavor, perfect for traditional Indian cooking.",
+    "category": "Edible Oils",
+    "quantity": "1 Litre",
+    "price": 280,
+    "currency": "₹",
+    "origin": "Rajasthan",
+    "organic": true,
+    "imageUrl": "https://images.unsplash.com/photo-1596627670783-a798a3b567b4?auto=format&fit=crop&q=80&w=1000",
+    "tag": "Strong & Pungent",
+    "benefits": ["Improves Digestion", "Good for Skin", "Natural Preservative"]
+  },
+  {
+    "id": 5,
+    "productName": "Wood Pressed Sunflower Oil",
+    "description": "Light and healthy, our Sunflower Oil is wood-pressed to preserve its natural Vitamin E content. An excellent all-purpose cooking oil.",
+    "category": "Edible Oils",
+    "quantity": "1 Litre",
+    "price": 320,
+    "currency": "₹",
+    "origin": "Gujarat",
+    "organic": true,
+    "imageUrl": "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&q=80&w=1000",
+    "tag": "Light & Healthy",
+    "benefits": ["Rich in Vitamin E", "Light Flavor", "Cholesterol Free"]
+  }
+]

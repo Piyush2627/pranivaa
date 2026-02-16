@@ -1,19 +1,21 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import StudentsDashboardPage from "../pages/StudentsDashboardPage";
 import UpdateImagePage from "../pages/UpdateImagePage";
 import LoginPage from "../pages/LoginPage";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import HomePage from "../pages/HomePage";
 import AdminLayout from "../layouts/AdminLayout";
-import StudentLayout from "../layouts/StudentLayout";
+import UserLayout from "../layouts/UserLayout";
 import SettingsPage from "../pages/SettingsPage";
 import AdminSignUpPage from "../pages/AdminSignUpPage";
-import StudentSignUpPage from "../pages/StudentSignUpPage";
+import UserSignUpPage from "../pages/UserSignUpPage";
 import WebLayout from "../layouts/WebLayout";
 import AboutPage from "../pages/AboutPage";
 import OurProcessPage from "../pages/OurProcessPage";
+import ProductsPage from "../pages/ProductsPage";
+import WhyColdPressPage from "../pages/WhyColdPressPage";
+import ContactPage from "../pages/ContactPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +24,7 @@ export const router = createBrowserRouter([
       { path: "login", element: <LoginPage />, handle: { title: "login" } },
       {
         path: "signup",
-        element: <StudentSignUpPage />,
+        element: <UserSignUpPage />,
         handle: { title: "signup" },
       },
       {
@@ -49,6 +51,21 @@ export const router = createBrowserRouter([
             element: <OurProcessPage />,
             handle: { title: "Our Process" },
           },
+          {
+            path: "productsPage",
+            element: <ProductsPage />,
+            handle: { title: "Products" },
+          },
+          {
+            path: "why-cold-pressed",
+            element: <WhyColdPressPage />,
+            handle: { title: "Why Cold Pressed" },
+          },
+          {
+            path: "contact",
+            element: <ContactPage />,
+            handle: { title: "Contact Us" },
+          },
         ],
       },
       {
@@ -68,15 +85,12 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        element: <ProtectedRoute allowedRoles={["student"]} />,
+        element: <ProtectedRoute allowedRoles={["user"]} />,
         children: [
           {
-            path: "student",
-            element: <StudentLayout />,
-            children: [
-              { path: "dashboard", element: <StudentsDashboardPage /> },
-              { path: "settings", element: <SettingsPage /> },
-            ],
+            path: "user",
+            element: <UserLayout />,
+            children: [{ path: "settings", element: <SettingsPage /> }],
           },
         ],
       },

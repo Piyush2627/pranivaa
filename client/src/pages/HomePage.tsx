@@ -1,429 +1,428 @@
 import { Link } from "react-router-dom";
-import HomePageImage1 from "../assets/images/coconutBottleHome.png";
-import ourRootsImage from "../assets/images/OurRootsImage1.png";
-import ourRootsImage2 from "../assets/images/OurRootsImage2.png";
-import { FaSpa } from "react-icons/fa";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import {
+  FaSpa,
+  FaLeaf,
+  FaArrowRight,
+  FaShoppingBag,
+  FaSeedling,
+  FaSolarPanel,
+  FaFilter,
+} from "react-icons/fa";
+import { MdOutlineHealthAndSafety, MdVerified } from "react-icons/md";
+import { GiOilDrum } from "react-icons/gi";
+import { useCart } from "../context/CartContext";
+import ScrollVelocity from "../components/Cn/ScrollVelocity";
+import HeroBackground from "../assets/images/HeroBackground.png";
 
-import { MdClass, MdShield } from "react-icons/md";
+const PRODUCTS = [
+  {
+    id: 1,
+    name: "Groundnut Oil",
+    desc: "Wood Pressed • 1L",
+    price: 450,
+    currency: "₹",
+    image:
+      "https://images.unsplash.com/photo-1474979266404-7cadd259d366?auto=format&fit=crop&q=80&w=600",
+    tag: "Bestseller",
+  },
+  {
+    id: 2,
+    name: "Coconut Oil",
+    desc: "Virgin Cold Pressed • 500ml",
+    price: 399,
+    currency: "₹",
+    image:
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=600",
+    tag: null,
+  },
+  {
+    id: 3,
+    name: "Black Sesame Oil",
+    desc: "Traditional Ghani • 1L",
+    price: 550,
+    currency: "₹",
+    image:
+      "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&q=80&w=600",
+    tag: null,
+  },
+  {
+    id: 4,
+    name: "Mustard Oil",
+    desc: "Kachi Ghani • 1L",
+    price: 280,
+    currency: "₹",
+    image:
+      "https://images.unsplash.com/photo-1596627670783-a798a3b567b4?auto=format&fit=crop&q=80&w=600",
+    tag: "New Harvest",
+  },
+];
 
-import { MdShoppingCartCheckout } from "react-icons/md";
+const PROCESS_STEPS = [
+  {
+    icon: <FaSeedling />,
+    title: "Sourcing",
+    desc: "Hand-picked high-quality heirloom seeds.",
+  },
+  {
+    icon: <FaSolarPanel />,
+    title: "Sun Drying",
+    desc: "Naturally dried to remove moisture.",
+  },
+  {
+    icon: <GiOilDrum />,
+    title: "Wood Pressing",
+    desc: "Slow pressed in 'Ghanis' without heat.",
+  },
+  {
+    icon: <FaFilter />,
+    title: "Bottling",
+    desc: "Naturally sedimented and glass bottled.",
+  },
+];
+
+const SectionHeader = ({
+  sub,
+  title,
+  align = "center",
+  light = false,
+}: {
+  sub: string;
+  title: React.ReactNode;
+  align?: "left" | "center";
+  light?: boolean;
+}) => (
+  <div className={`mb-12 ${align === "center" ? "text-center" : "text-left"}`}>
+    <span className={`font-mono text-xs font-bold tracking-[0.2em] uppercase ${light ? "text-orange-300" : "text-[#C87941]"}`}>
+      {sub}
+    </span>
+    <h2 className={`mt-3 font-source-serif text-4xl font-medium md:text-5xl ${light ? "text-white" : "text-[#1A2F23]"}`}>
+      {title}
+    </h2>
+  </div>
+);
+
+const BenefitCard = ({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) => (
+  <motion.div
+    variants={{
+      hidden: { opacity: 0, y: 30 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    }}
+    whileHover={{ y: -10, transition: { duration: 0.2 } }}
+    className="group rounded-2xl border border-[#1A2F23]/5 bg-white p-8 transition-all hover:border-[#1A2F23]/20 hover:shadow-xl hover:shadow-[#1A2F23]/5"
+  >
+    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#fbf9eb] text-2xl text-[#1A2F23] transition-colors group-hover:bg-[#1A2F23] group-hover:text-white">
+      {icon}
+    </div>
+    <h3 className="mb-3 font-source-serif text-xl font-bold text-[#1A2F23]">
+      {title}
+    </h3>
+    <p className="text-sm leading-relaxed text-[#1A2F23]/70">{desc}</p>
+  </motion.div>
+);
+
+const ProductCard = ({ product, onAdd }: { product: (typeof PRODUCTS)[0], onAdd: (p: any) => void }) => (
+  <motion.div
+    variants={{
+      hidden: { opacity: 0, y: 30 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    }}
+    whileHover="hover"
+    initial="initial"
+    viewport={{ once: true }}
+    className="group relative flex flex-col overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm border border-white/20 transition-all hover:shadow-2xl hover:shadow-[#1A2F23]/10"
+  >
+    <div className="relative aspect-[4/5] overflow-hidden">
+      {product.tag && (
+        <span className="absolute top-4 left-4 z-10 bg-[#1A2F23] px-3 py-1 text-[10px] font-bold tracking-widest text-white uppercase">
+          {product.tag}
+        </span>
+      )}
+      <motion.img
+        variants={{
+          initial: { scale: 1 },
+          hover: { scale: 1.1, transition: { duration: 0.6 } },
+        }}
+        src={product.image}
+        alt={product.name}
+        className="h-full w-full object-cover"
+      />
+      {/* Quick Add Overlay */}
+      <motion.div 
+        variants={{
+          initial: { opacity: 0, y: 20 },
+          hover: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+        }}
+        className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-[#1A2F23]/80 to-transparent p-6"
+      >
+        <motion.button 
+          whileTap={{ scale: 0.95 }}
+          onClick={() => onAdd(product)}
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-white py-3 text-sm font-bold text-[#1A2F23] hover:bg-[#C87941] hover:text-white shadow-lg transition-colors"
+        >
+          <FaShoppingBag /> Add to Cart
+        </motion.button>
+      </motion.div>
+    </div>
+    <div className="flex flex-1 flex-col p-5">
+      <h3 className="font-source-serif text-lg font-bold text-[#1A2F23]">
+        {product.name}
+      </h3>
+      <p className="text-xs font-medium tracking-wider text-[#1A2F23]/50 uppercase">
+        {product.desc}
+      </p>
+      <div className="mt-auto pt-4 text-lg font-medium text-[#C87941]">
+        {product.currency} {product.price}
+      </div>
+    </div>
+  </motion.div>
+);
 
 const HomePage = () => {
+  const { addToCart, setIsCartOpen } = useCart();
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      productName: product.name,
+      price: product.price,
+      quantity: 1,
+      imageUrl: product.image,
+      currency: product.currency,
+    });
+    setIsCartOpen(true);
+  };
+
   return (
-    <div>
-      <header className="font-poppins relative overflow-hidden pt-32 pb-16 md:pt-48 md:pb-32">
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-            <div className="animate-fade-in-up text-center text-shadow-md md:text-left">
-              <span className="mb-2 inline-block rounded-full bg-lime-200 px-3 py-1 text-xs font-bold tracking-wider uppercase dark:bg-green-900/30">
-                Traditional oil pressing, restored for modern kitchens.
-              </span>
-              <h1 className="text-5xl leading-tight font-bold text-gray-900 md:text-8xl">
-                PRANIVAA
-              </h1>
-              <h1 className="font-display text-2xl leading-tight font-bold text-gray-700 md:text-4xl dark:text-white">
-                <span className="text-lime-800">Not refined. </span>
-                Brings back oil as it was meant to be.
-                <br />
-              </h1>{" "}
-              <p className="mx-auto max-w-lg text-lg leading-relaxed text-gray-600 md:mx-0 dark:text-gray-300">
-                Pressed slowly. Sourced transparently. Crafted in small batches
-                using traditional wood and cold-press methods, PRANIVAA oils
-                preserve natural flavour, aroma, and nutrition — without
-                unnecessary processing.{" "}
-              </p>
-              <p>
-                This is not oil made for speed or scale. This is oil defined by
-                nature
-              </p>
-              <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row md:justify-start">
-                <a
-                  className="hover:bg-opacity-90 hover:shadow-primary/50 flex items-center justify-center gap-2 rounded-full bg-lime-800 px-8 py-4 font-medium text-white shadow-lg transition"
-                  href="#bestsellers"
-                >
-                  Explore Our Oils
-                  <span className="material-icons-outlined text-sm">
-                    <MdShoppingCartCheckout className="size-5" />
-                  </span>
-                </a>
-                <Link
-                  className="flex items-center justify-center rounded-full border border-gray-300 px-8 py-4 font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
-                  to="OurProcess"
-                >
-                  Our Process
-                </Link>
-              </div>
+    <div className="bg-[#fbf9eb] min-h-screen w-full font-poppins text-[#1A2F23] overflow-x-hidden">
+      {/* 1. Hero Section */}
+      <header ref={heroRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-black/30 z-10" />
+            <img 
+            src={HeroBackground}
+            alt="Hero Background"
+            className="w-full h-full object-cover"
+            />
+        </motion.div>
+
+        <div className="relative z-20 container mx-auto px-6 text-center text-white">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <span className="mb-4 block font-mono text-xs md:text-sm font-bold tracking-[0.3em] text-orange-200 uppercase">
+                Est. 2024 • Earth to Bottle
+            </span>
+            <h1 className="font-source-serif text-5xl md:text-7xl lg:text-9xl font-medium leading-tight mb-8">
+              Nature's Purest <br />
+              <span className="italic text-orange-100">Essence.</span>
+            </h1>
+            <p className="max-w-xl mx-auto text-lg md:text-xl text-white/90 font-light mb-12 leading-relaxed">
+               Cold pressed oils crafted with traditional wisdom. <br className="hidden md:block"/> No heat. No chemicals. Just pure nutrition.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href="#bestsellers"
+                className="group relative overflow-hidden rounded-full bg-white px-8 py-4 text-sm font-bold tracking-wider text-[#1A2F23] transition-all hover:bg-orange-100"
+              >
+                 <span className="relative z-10 flex items-center gap-2">Shop Collection <FaArrowRight /></span>
+              </a>
+              <Link
+                to="/OurProcess"
+                className="group relative overflow-hidden rounded-full border border-white/30 px-8 py-4 text-sm font-bold tracking-wider text-white backdrop-blur-sm transition-all hover:bg-white/10"
+              >
+                Our Process
+              </Link>
             </div>
-            <div className="relative hidden h-[500px] w-full md:block">
-              <div className="bg-secondary/20 dark:bg-secondary/10 absolute top-10 right-10 h-96 w-96 rounded-full blur-3xl"></div>
-              <div className="bg-primary/20 dark:bg-primary/10 absolute bottom-10 left-10 h-72 w-72 rounded-full blur-3xl"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <img
-                  alt="High quality olive oil bottle in a grove"
-                  className="shadow-soft h-full w-full transform rounded-3xl object-cover transition-transform duration-500 hover:scale-[1.02]"
-                  src={HomePageImage1}
-                />
-              </div>
-            </div>
-            <div className="relative mt-8 h-64 w-full overflow-hidden rounded-2xl shadow-lg md:hidden">
-              <img
-                alt="Olive oil bottle"
-                className="h-full w-full object-cover"
-                src={ourRootsImage2}
-              />
-            </div>
-          </div>
+          </motion.div>
         </div>
       </header>
-      <section className="bg-surface-light dark:bg-surface-dark py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <span className="text-secondary text-sm font-bold tracking-widest uppercase">
-              Health Benefits
-            </span>
-            <h2 className="font-display mt-2 text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
-              Why Choose Wood-Pressed?
+
+      {/* Marquee Section */}
+      <div className="bg-[#1A2F23] py-4 border-y border-white/5 overflow-hidden">
+        <ScrollVelocity
+            parallaxClassName="text-white/20"
+            scrollerClassName="text-white/20"
+            texts={["Cold Pressed • 100% Organic • Traditional • Pure • Natural • Healthy • No Heat •"]} 
+            velocity={30} 
+            className="text-4xl md:text-6xl font-source-serif italic"
+        />
+      </div>
+
+
+      {/* 2. Philosophy Section */}
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-green-200/20 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <FaLeaf className="mx-auto mb-6 text-3xl text-[#C87941]" />
+            <h2 className="font-source-serif text-3xl md:text-5xl leading-snug text-[#1A2F23] mb-8">
+              "We believe oil should remain oil. <br/> No shortcuts. Just seeds, patience, and pressure."
             </h2>
-            <div className="bg-primary mx-auto mt-4 h-1 w-20 rounded-full"></div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 3. Health Benefits */}
+      <section className="py-24 bg-white/50 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-6">
+          <SectionHeader
+            sub="Holistic Wellness"
+            title="Why Choose Wood-Pressed?"
+          />
+
+          <div className="grid gap-6 md:grid-cols-3">
+            <BenefitCard
+              icon={<MdOutlineHealthAndSafety />}
+              title="Heart Health"
+              desc="Rich in monounsaturated fats and antioxidants that maintain healthy cholesterol levels."
+            />
+            <BenefitCard
+              icon={<MdVerified />}
+              title="Boosts Immunity"
+              desc="Packed with natural nutrients and Vitamin E acting as powerful antioxidants."
+            />
+            <BenefitCard
+              icon={<FaSpa />}
+              title="Skin & Hair"
+              desc="The cold-press process preserves essential fatty acids that deeply nourish skin."
+            />
           </div>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-            <div className="group bg-background-light dark:bg-background-dark hover:border-primary/30 hover:shadow-soft rounded-2xl border border-transparent p-8 text-center transition-all duration-300">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 transition-transform group-hover:scale-110 dark:bg-green-900/40">
-                <span className="material-icons-outlined text-3xl">
-                  <MdClass />
-                </span>
-              </div>
-              <h3 className="font-display mb-3 text-xl font-bold dark:text-white">
-                Heart Health
-              </h3>
-              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-                Rich in monounsaturated fats and antioxidants that help maintain
-                healthy cholesterol levels and support cardiovascular function.
-              </p>
-            </div>
-            <div className="group bg-background-light dark:bg-background-dark hover:border-primary/30 hover:shadow-soft rounded-2xl border border-transparent p-8 text-center transition-all duration-300">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 transition-transform group-hover:scale-110 dark:bg-green-900/40">
-                <span className="material-icons-outlined text-3xl">
-                  <MdShield />
-                </span>
-              </div>
-              <h3 className="font-display mb-3 text-xl font-bold dark:text-white">
-                Boosts Immunity
-              </h3>
-              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-                Packed with natural nutrients and Vitamin E that act as powerful
-                antioxidants to strengthen your body's immune system.
-              </p>
-            </div>
-            <div className="group bg-background-light dark:bg-background-dark hover:border-primary/30 hover:shadow-soft rounded-2xl border border-transparent p-8 text-center transition-all duration-300">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 transition-transform group-hover:scale-110 dark:bg-green-900/40">
-                <span className="material-icons-outlined text-3xl">
-                  <FaSpa />
-                </span>
-              </div>
-              <h3 className="font-display mb-3 text-xl font-bold dark:text-white">
-                Skin &amp; Hair
-              </h3>
-              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-                The cold-press process preserves essential fatty acids that
-                deeply nourish skin and strengthen hair roots naturally.
-              </p>
+        </div>
+      </section>
+
+      {/* 4. Our Process (Visual Step-by-Step) */}
+      <section className="bg-[#1A2F23] py-24 text-[#F5F2EB] relative overflow-hidden">
+         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')]"></div>
+         
+        <div className="mx-auto max-w-7xl px-6 relative z-10">
+          <SectionHeader
+            sub="From Farm to Bottle"
+            title="Purity in Every Drop"
+            light={true}
+          />
+
+          <div className="relative mt-20">
+            {/* Connecting Line (Desktop) */}
+            <div className="absolute top-12 left-0 hidden h-0.5 w-full bg-[#F5F2EB]/10 lg:block"></div>
+
+            <div className="grid gap-12 lg:grid-cols-4">
+              {PROCESS_STEPS.map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.2, duration: 0.6 }}
+                  className="relative z-10 flex flex-col items-center text-center group"
+                >
+                  <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-[#1A2F23] bg-[#F5F2EB] text-4xl text-[#1A2F23] shadow-lg shadow-black/20 transition-transform group-hover:scale-110">
+                    {step.icon}
+                  </div>
+                  <h4 className="mb-2 font-source-serif text-xl">{step.title}</h4>
+                  <p className="text-sm text-[#F5F2EB]/60">{step.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
       </section>
-      <section
-        className="bg-background-light dark:bg-background-dark overflow-hidden py-20"
-        id="about"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-16 lg:flex-row">
-            <div className="relative w-full lg:w-1/2">
-              <div className="grid grid-cols-2 gap-4">
-                <img
-                  alt="Farmer holding harvest"
-                  className="h-64 w-full translate-y-8 transform rounded-2xl object-cover shadow-lg"
-                  src={ourRootsImage2}
-                />
-                <img
-                  alt="Organic farming field"
-                  className="h-64 w-full rounded-2xl object-cover shadow-lg"
-                  src={ourRootsImage}
-                />
-              </div>
-              <div className="bg-secondary/10 absolute top-1/2 left-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 transform rounded-full blur-3xl"></div>
+
+      {/* 5. Bestsellers */}
+      <section id="bestsellers" className="py-24 px-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end mb-16">
+            <div className="text-left">
+                 <span className="font-mono text-xs font-bold tracking-[0.2em] text-[#C87941] uppercase">
+                  Shop Favorites
+                </span>
+                <h2 className="mt-3 font-source-serif text-4xl font-medium text-[#1A2F23] md:text-5xl">
+                       Our Best Sellers
+                </h2>
             </div>
-            <div className="w-full lg:w-1/2">
-              <span className="mb-2 block text-sm font-bold tracking-widest uppercase">
-                Our Roots
-              </span>
-              <h2 className="font-display mb-6 text-4xl font-bold text-gray-900 md:text-5xl dark:text-white">
-                Empowering Farmers, <br />
-                Delivering Purity.
-              </h2>
-              <p className="mb-6 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
-                At Pranivaa, we believe the best quality comes from the source.
-                We partner directly with small-scale farmers who use
-                traditional, chemical-free farming methods.
-              </p>
-              <p className="mb-8 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
-                By cutting out middlemen, we ensure fair wages for our growers
-                and the freshest, most authentic wood-pressed oils for your
-                kitchen. Every bottle tells a story of hard work and nature's
-                bounty.
-              </p>
-              <div className="flex items-center gap-8">
-                <div>
-                  <p className="font-display text-3xl font-bold">500+</p>
-                  <p className="text-sm tracking-wide text-gray-500 uppercase dark:text-gray-400">
+            
+            <Link
+              to="/productsPage"
+              className="group flex items-center gap-2 font-bold text-[#C87941] hover:text-[#1A2F23] transition-colors"
+            >
+              View All Products{" "}
+              <FaArrowRight className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {PRODUCTS.map((prod) => (
+              <ProductCard key={prod.id} product={prod} onAdd={handleAddToCart} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Footer / Stats (Our Roots) */}
+      <section className="py-20 px-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-[3rem] bg-[#2c3e2e] p-12 lg:p-24 text-[#fdfbf7] relative overflow-hidden">
+             {/* Background Pattern */}
+            <div className="absolute top-0 right-0 -mt-32 -mr-32 h-96 w-96 rounded-full bg-orange-500/10 blur-3xl"></div>
+
+
+            <div className="relative z-10 flex flex-col items-center gap-12 lg:flex-row">
+              <div className="flex-1 text-center lg:text-left">
+                <span className="mb-4 block font-mono text-xs font-bold tracking-widest text-orange-300 uppercase">
+                  Our Roots
+                </span>
+                <h2 className="font-source-serif text-4xl leading-tight font-medium md:text-5xl mb-6">
+                  Traditional Wisdom, <br /> Modern Purity.
+                </h2>
+                <p className="text-lg text-white/70 max-w-lg mx-auto lg:mx-0">
+                  We partner directly with farmers in Rajasthan and Gujarat,
+                  ensuring that every seed pressed is of the heirloom variety.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-12 border-t sm:border-t-0 sm:border-l border-white/10 pt-12 sm:pt-0 sm:pl-12">
+                <div className="text-center sm:text-left">
+                  <div className="font-source-serif text-5xl font-bold text-white mb-2">
+                    500+
+                  </div>
+                  <div className="text-xs font-bold tracking-wider text-orange-300 uppercase">
                     Partner Farmers
-                  </p>
+                  </div>
                 </div>
-                <div className="h-12 w-px bg-gray-300 dark:bg-gray-700"></div>
-                <div>
-                  <p className="font-display text-3xl font-bold">100%</p>
-                  <p className="text-sm tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                <div className="text-center sm:text-left">
+                  <div className="font-source-serif text-5xl font-bold text-white mb-2">
+                    100%
+                  </div>
+                  <div className="text-xs font-bold tracking-wider text-orange-300 uppercase">
                     Traceable
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section
-        className="bg-surface-light dark:bg-surface-dark relative py-24"
-        id="bestsellers"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 flex flex-col items-end justify-between md:flex-row">
-            <div>
-              <span className="text-secondary text-sm font-bold tracking-widest uppercase">
-                Shop Favorites
-              </span>
-              <h2 className="font-display mt-2 text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
-                Our Best Sellers
-              </h2>
-            </div>
-            <a
-              className="hover:text-secondary mt-4 hidden items-center font-medium transition-colors md:mt-0 md:flex"
-              href="#"
-            >
-              View All Products{" "}
-              <span className="material-icons-outlined ml-1">
-                arrow_forward
-              </span>
-            </a>
-          </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="group bg-background-light dark:bg-background-dark overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl">
-              <div className="relative flex h-64 items-center justify-center bg-gray-100 p-6 dark:bg-gray-800">
-                <img
-                  alt="Groundnut Oil"
-                  className="h-full transform object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-110 dark:mix-blend-normal"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLGKy4AsbgOj606faNSF0wggHeu3yaSPOez8p_JH8UYphktjzxF8XC4w_KUgVW9pcpZEblVzl4CZAEWiGzrmbRvjZTOb5JVJE0a-dYRe-F3SZfykKKrflpvMex9FDiKfBP3pNK8Nng7Fc5zyvgrPz0cALe-dss2jjYM0SpNhKM3M9fsy4b9Sc02yPQmlTu6jw43RJWRoaYcYIJBubb3aY7p0iUwGJfmavcJt_mK-4GN4LvVQPk4vd9fu2FvcA6c1pyB7WCxy50lA"
-                />
-                <span className="absolute top-4 left-4 rounded bg-white px-2 py-1 text-xs font-bold tracking-wider uppercase shadow-sm dark:bg-gray-700">
-                  Bestseller
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="font-display mb-1 text-lg font-bold text-gray-900 dark:text-white">
-                  Groundnut Oil
-                </h3>
-                <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-                  Wood Pressed - 1L
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold">$12.99</span>
-                  <button className="bg-primary hover:bg-opacity-90 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-md transition">
-                    <span className="material-icons-outlined text-sm">
-                      add_shopping_cart
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="group bg-background-light dark:bg-background-dark overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl">
-              <div className="relative flex h-64 items-center justify-center bg-gray-100 p-6 dark:bg-gray-800">
-                <img
-                  alt="Coconut Oil"
-                  className="h-full transform object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-110 dark:mix-blend-normal"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwd0-i8BHRwyHeHAQ5KOz0zHxha96P-h1m3QO19Ei3t-dVYAYX9vnDvZyBA2EuA9Ohqy6Sm3zUYxWMpMNdf-ereBcbqtsYX5kLH8bduQ8YHEgH56NDexnE1KjChPZcAoMjsaSBIBp17E5RIQUsEYk-E9Xt9Tt86lnOzfklCbVD6WgkuBcGFp4PSJ0uZbWA6G5y4x2FvwhmCDpzwsWNOWIizdgdCICBUsC_P85-h0Rnb56sryvvh2EEzMR0CVuxlkzhLbFvse0BbA"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-display mb-1 text-lg font-bold text-gray-900 dark:text-white">
-                  Coconut Oil
-                </h3>
-                <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-                  Virgin Cold Pressed - 500ml
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold">$15.50</span>
-                  <button className="bg-primary hover:bg-opacity-90 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-md transition">
-                    <span className="material-icons-outlined text-sm">
-                      add_shopping_cart
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="group bg-background-light dark:bg-background-dark overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl">
-              <div className="relative flex h-64 items-center justify-center bg-gray-100 p-6 dark:bg-gray-800">
-                <img
-                  alt="Sesame Oil"
-                  className="h-full transform object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-110 dark:mix-blend-normal"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnXOfnKimCTbIa-nKNgH57UjwcHXxQn4jjJ-Nfx9Zdq9tsTaQt0rIVVmaO2lQ84QkHlT_ZLEUCY1BuiNOMudXNqJXlHy6Kl9OWy2zoIPjcXbYyjQDhejfnNWNIWEuej2HjjTPJFS9m0gdBd3IDK_L4aLFCOnWmuvhnKM3SWSXyArj7tcxsMg4xxWtEwAs2eAhun-AMqHArCUoQ8uzJ_HWscrF4yD18qf0dqhFoF-aeLO6raD8tsjNKJ-DLyQ-otGpg90Ixwq5LZg"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-display mb-1 text-lg font-bold text-gray-900 dark:text-white">
-                  Black Sesame Oil
-                </h3>
-                <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-                  Traditional Ghani - 1L
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold">$18.00</span>
-                  <button className="bg-primary hover:bg-opacity-90 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-md transition">
-                    <span className="material-icons-outlined text-sm">
-                      add_shopping_cart
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="group bg-background-light dark:bg-background-dark overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl">
-              <div className="relative flex h-64 items-center justify-center bg-gray-100 p-6 dark:bg-gray-800">
-                <img
-                  alt="Mustard Oil"
-                  className="h-full transform object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-110 dark:mix-blend-normal"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkMYozwVdAh5eLZNujQJL7rA1v6pSZcLcaQIPbs1AohRi_TzGbbW7xi_MEfW5Zq3j1E09quQGDqBzSmy37GpSjM8fCCkOleNYInhp-waqhCvmBNRbHN59M-hqDeHiZCFoq_oKpBLg-6xDoxW8MCl_t5xDpUuay36e_b-7_7vo_PfyHp-kxE2nlJ0RZnOC6_Y5B-yXRQJTALwEa5tGp3KmlubPtBP2h8_XYim0wHqYpt3JWIT85Cwv5jJ4x4M4KnJgzhGQds2b4-A"
-                />
-                <span className="bg-secondary absolute top-4 left-4 rounded px-2 py-1 text-xs font-bold tracking-wider text-white uppercase shadow-sm">
-                  New
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="font-display mb-1 text-lg font-bold text-gray-900 dark:text-white">
-                  Mustard Oil
-                </h3>
-                <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-                  Kachi Ghani - 1L
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold">$10.50</span>
-                  <button className="bg-primary hover:bg-opacity-90 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-md transition">
-                    <span className="material-icons-outlined text-sm">
-                      add_shopping_cart
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 text-center md:hidden">
-            <a
-              className="hover:text-secondary inline-flex items-center font-medium transition-colors"
-              href="#"
-            >
-              View All Products{" "}
-              <span className="material-icons-outlined ml-1">
-                arrow_forward
-              </span>
-            </a>
-          </div>
-        </div>
-      </section>
-      <section
-        className="bg-background-light dark:bg-background-dark py-20"
-        id="process"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <h2 className="font-display text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
-              Purity in Every Drop
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-400">
-              From the soil to your spoon, we maintain the highest standards of
-              hygiene and tradition.
-            </p>
-          </div>
-          <div className="relative">
-            <div className="absolute top-1/3 left-0 -z-10 hidden h-0.5 w-full bg-gray-200 md:block dark:bg-gray-700"></div>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-              <div className="text-center">
-                <div className="bg-surface-light dark:bg-surface-dark relative z-10 mx-auto mb-6 h-32 w-32 rounded-full border-4 border-white p-2 shadow-lg dark:border-gray-800">
-                  <img
-                    alt="Seeds"
-                    className="h-full w-full rounded-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB34ho8Mi3Vop_xDRqH0hAGP9YFAUuRgJWSCMO3VUxo5HfasiYxZ4dDGFSnYONZkr12LQZhk0z7ZhNzGSpI7kVTIT2dR3b3Li1ReffsC3e6eo5thzQ6BI7Xx5JMOzpG9XtsgBfZ0Q16YnfS7H8lGmF4rzQF1sa9L6a9DK9LPFRDyp5ejdFC8Nf1kA53rYIKf4-z9QPYOhR8VDQGCQp_JtL9ntZlib0c3tNHAzoCpypjqpEY7EeJaJnS0nlo00IIx4Zd49kYRbeJBA"
-                  />
-                  <div className="bg-primary absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full font-bold text-white">
-                    1
                   </div>
                 </div>
-                <h4 className="font-display mb-2 text-lg font-bold dark:text-white">
-                  Sourcing
-                </h4>
-                <p className="px-4 text-sm text-gray-600 dark:text-gray-400">
-                  Hand-picked high-quality seeds from partner farms.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-surface-light dark:bg-surface-dark relative z-10 mx-auto mb-6 h-32 w-32 rounded-full border-4 border-white p-2 shadow-lg dark:border-gray-800">
-                  <img
-                    alt="Drying"
-                    className="h-full w-full rounded-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuATS4HqEJDy-xNyEXWACrSMBNV1bPTn1SvXFjyiKlnALwNRlIXxQc2VKtVezSQJtLw16yRXC9p5JQLOzx5rdAYRP70wDNXWEBvMDLpJdkRCRRh0HTp7gc4BmwfMs3Rsbmngld_UhTQaqXLXStyWIuRvmLFx_iHo4Z_rjZKWC6d_FNPmuCjLi5PM_UiwC8C28hPuRQw9ayVntsv18TetUs5nLeRlw6J_bWsZGlnIVHu8Mfu_cONm26j2q2px0_E0EvFVedNHMMdOJA"
-                  />
-                  <div className="bg-primary absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full font-bold text-white">
-                    2
-                  </div>
-                </div>
-                <h4 className="font-display mb-2 text-lg font-bold dark:text-white">
-                  Sun Drying
-                </h4>
-                <p className="px-4 text-sm text-gray-600 dark:text-gray-400">
-                  Seeds are naturally sun-dried to prevent moisture.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-surface-light dark:bg-surface-dark relative z-10 mx-auto mb-6 h-32 w-32 rounded-full border-4 border-white p-2 shadow-lg dark:border-gray-800">
-                  <img
-                    alt="Pressing"
-                    className="h-full w-full rounded-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRAU7DJ2GQVfMOTybi8FXPRCS0QEjI063f5TsVkkGbJsvRrymUcV6_xqqMIgbUZNtDoap-UM0nb4hhU8Puhlmhv99FDhhBHPU_fEXO2y7kU-JUyXeOxZ7Hsg7GtjYI5rfUYnGQsUpMCF5rpbkdjEf4jX8RD-cDQ867mev_rZmRdUKM5SdudPWt9YS_1wdzQN8IuW62bkigjMWU0b8jQwH57YnpNwg5vpZ1xLT1GyreLezzETaZR0tF21IjtB9esZBhWX_kxhCkNQ"
-                  />
-                  <div className="bg-primary absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full font-bold text-white">
-                    3
-                  </div>
-                </div>
-                <h4 className="font-display mb-2 text-lg font-bold dark:text-white">
-                  Wood Pressing
-                </h4>
-                <p className="px-4 text-sm text-gray-600 dark:text-gray-400">
-                  Slow pressed in traditional 'Ghanis' without heat.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="bg-surface-light dark:bg-surface-dark relative z-10 mx-auto mb-6 h-32 w-32 rounded-full border-4 border-white p-2 shadow-lg dark:border-gray-800">
-                  <img
-                    alt="Bottling"
-                    className="h-full w-full rounded-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6UkP-a-92TJyTX6TWnpOdbdoYy997Zk61KgUG8WgQkxTGF3MCEmhykmXo2_44nvkH41dr-VgoEocZzL0X38fUcnXNytuNXa6Bw0PoxV4UQagZ_Sb4io9By3yu6FzY4PUP-B0Bbcjuja8Ua_LYRSCqPQae7ft4yZ5sMs8CWmeJT-z7nzOoBP_NaQvI8Sv2uTCh_K3_Od0S4yAs5fOWq-sqvzak3SL5OQciBt621gCe4cpp6DFHkz1yJwsHK_uJ8BDE5UgleKHChw"
-                  />
-                  <div className="bg-primary absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full font-bold text-white">
-                    4
-                  </div>
-                </div>
-                <h4 className="font-display mb-2 text-lg font-bold dark:text-white">
-                  Filtering &amp; Bottling
-                </h4>
-                <p className="px-4 text-sm text-gray-600 dark:text-gray-400">
-                  Naturally sedimented and packed to seal freshness.
-                </p>
               </div>
             </div>
           </div>

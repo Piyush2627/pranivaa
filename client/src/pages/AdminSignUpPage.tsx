@@ -2,6 +2,8 @@ import { useState, type ChangeEvent } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import CustomInput from "../components/common/CustomInput";
+import coconutBottleHome from "../assets/images/coconutBottleHome.png";
 
 function AdminSignUpPage() {
   const navigate = useNavigate();
@@ -35,83 +37,65 @@ function AdminSignUpPage() {
   };
 
   return (
-    <div>
+    <div className="flex h-screen bg-green-50 font-source-serif">
       <Toaster />
-      <div className="flex h-screen">
-        <div className="hidden flex-1 items-center justify-center text-black lg:flex">
-          <div className="max-w-md text-center">
-            <img src="/src/assets/images/image.png" alt="" />
-          </div>
+      {/* Left Side Illustration */}
+      <div className="hidden lg:flex flex-1 items-center justify-center">
+        <div className="max-w-md text-center">
+          <img
+            className="w-full"
+            src={coconutBottleHome}
+            alt="Pranivaa Coconut Bottle"
+          />
         </div>
-        <div className="flex w-full items-center justify-center bg-gray-100 lg:w-1/2">
-          <div className="w-full max-w-md p-6">
-            <h1 className="mb-6 text-center text-3xl font-semibold text-black">
-              Admin Sign Up
-            </h1>
-            <h1 className="mb-6 text-center text-sm font-semibold text-gray-500">
-              Join to Our Community with all time access and free{" "}
-            </h1>
+      </div>
 
-            <div>
-              <label
-                htmlFor="userName"
-                className="block text-sm font-medium text-gray-700"
-              >
-                User Name
-              </label>
-              <input
-                type="text"
-                id="userName"
-                name="userName"
-                value={isUserRegistration.userName}
-                onChange={handleOnChange}
-                className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email
-              </label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value={isUserRegistration.email}
-                onChange={handleOnChange}
-                className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                name="password"
-                value={isUserRegistration.password}
-                onChange={handleOnChange}
-                className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:outline-none"
-              />
-            </div>
-            <div>
-              <button
-                onClick={registerUserOnclick}
-                className="mt-4 w-full rounded-md bg-black p-2 text-white transition-colors duration-300 hover:bg-gray-800 focus:bg-black focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:outline-none"
-              >
-                Sign Up
-              </button>
-            </div>
-            <Link to="/login">
-              <div className="mt-4 text-center text-sm text-gray-600">
-                <p>Already have an account? </p>
-              </div>
+      {/* Right Side Signup Form */}
+      <div className="flex w-full items-center justify-center bg-white lg:w-1/2">
+        <div className="w-full max-w-md p-6">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-green-800 font-alexana">Admin Registration</h1>
+            <p className="mt-2 text-sm text-gray-600">
+              Create an administrator account.
+            </p>
+          </div>
+
+          <div className="mt-8 space-y-6">
+            <CustomInput
+              label="User Name"
+              name="userName"
+              value={isUserRegistration.userName}
+              onChange={handleOnChange}
+            />
+            <CustomInput
+              label="Email"
+              name="email"
+              value={isUserRegistration.email}
+              onChange={handleOnChange}
+              type="email"
+            />
+            <CustomInput
+              label="Password"
+              name="password"
+              value={isUserRegistration.password}
+              onChange={handleOnChange}
+              type="password"
+            />
+          </div>
+
+          <button
+            onClick={registerUserOnclick}
+            className="mt-8 w-full rounded-md bg-green-700 px-4 py-2 text-white hover:bg-green-800 focus:ring-2 focus:ring-green-900 focus:outline-none"
+          >
+            Create Admin Account
+          </button>
+
+          <div className="mt-4 text-center text-sm">
+            <Link
+              to="/login"
+              className="font-medium text-green-700 hover:underline"
+            >
+              Already have an account? Login
             </Link>
           </div>
         </div>
